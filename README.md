@@ -1,6 +1,9 @@
 # Task Master
 
-Try a live version at https://taskmaster.keithschacht.com . This repo is not a fully functioning app because Task Master lives as part of a larger repo that is coupled to a few other pieces. However, I extracted the interesting parts of code into this repo in case you want to poke around. If there is enough interest, I/we could turn this into an open-source version of Task Master so it could be run as a stand-alone project.
+Try a live version at https://taskmaster.keithschacht.com 
+About the project: https://keithschacht.com/2025/Dec/27/voice-first-todo-list-that-updates-live-as-you-talk/
+
+Note: This repo is not a fully functioning app because Task Master lives as part of a larger repo that is coupled to a few other pieces. However, I extracted the interesting parts of code into this repo in case you want to poke around. If there is enough interest, I/we could turn this into an open-source version of Task Master so it could be run as a stand-alone project.
 
 ## Notable Bits
 
