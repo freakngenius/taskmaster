@@ -1,0 +1,7 @@
+<div data-controller="keyboard-focus">
+  <input type="text" data-keyboard-focus-target="proxy" autocomplete="off" style="position: absolute; opacity: 0; pointer-events: none;">
+  <%= link_to new_task_path(list_id: list.id), class: "add-task-row", data: {turbo_frame: "new_task_form", action: "click->keyboard-focus#activate"} do %>
+    <%= lucide_icon('circle-check-big', class: 'add-task-icon') %>
+    <span class="add-task-text">Add a task</span>
+  <% end %>
+</div>

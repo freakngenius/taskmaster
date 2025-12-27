@@ -1,0 +1,16 @@
+<%= turbo_frame_tag task do %>
+  <% highlighted = local_assigns[:highlight_task_id] == task.id %>
+  <div class="task-row<%= ' highlight-new' if highlighted %>" data-controller="task-checkbox<%= ' task-highlight' if highlighted %>">
+    <%= button_to task_path(task),
+      method: :patch,
+      params: {task: {completed: true}},
+      class: "task-checkbox-btn",
+      data: {
+        action: "mouseenter->task-checkbox#showCheck mouseleave->task-checkbox#showCircle click->task-checkbox#complete"
+      } do %>
+      <%= lucide_icon('circle', class: 'task-checkbox-icon', data: {task_checkbox_target: 'circleIcon'}) %>
+      <%= lucide_icon('check', class: 'task-checkbox-icon hidden', data: {task_checkbox_target: 'checkIcon'}) %>
+    <% end %>
+    <span class="task-title"><%= render "tasks/title", task: task %></span>
+  </div>
+<% end %>

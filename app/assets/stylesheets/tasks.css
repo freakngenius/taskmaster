@@ -1,0 +1,936 @@
+@font-face {
+  font-family: 'GT America Compressed';
+  src: url('GT-America-Compressed-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GT America Standard';
+  src: url('GT-America-Standard-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GT America Standard';
+  src: url('GT-America-Standard-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: black;
+  color: #00ff88;
+  margin: 0;
+  padding: 0 40px;
+  font-family: 'GT America Standard', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: clamp(40px, calc(6.4vw + 17px), 80px);
+  margin-bottom: clamp(40px, calc(6.4vw + 17px), 80px);
+  box-sizing: border-box;
+}
+
+.text-content {
+  padding-right: 0;
+}
+
+.content-svg-bg {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  pointer-events: none;
+}
+
+h1 {
+  font-family: 'GT America Compressed', sans-serif;
+  font-weight: 900;
+  line-height: 80%;
+  text-transform: uppercase;
+  margin: 0 0 clamp(40px, calc(6.4vw + 17px), 80px) 0;
+}
+
+h1 .lowercase {
+  text-transform: lowercase;
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  font-size: 0.5em;
+  color: transparent;
+  -webkit-text-stroke: 1px #00ff88;
+}
+
+.intro-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.intro-image {
+  flex: 0 0 33%;
+  max-width: 297px;
+}
+
+.intro-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #00ff88;
+  box-shadow: 0 0 8px 2px rgba(0, 255, 136, 0.5), inset 0 0 2px rgba(0, 255, 136, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.intro-image img:hover {
+  box-shadow: 0 0 20px 6px rgba(0, 255, 136, 0.8), inset 0 0 4px rgba(0, 255, 136, 0.3);
+}
+
+.intro-text {
+  flex: 1;
+}
+
+@media (max-width: 639px) {
+  .intro-row {
+    flex-direction: column;
+  }
+
+  .intro-image {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.subtitle {
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, calc(0.64vw + 17.7px), 24px);
+  line-height: 130%;
+  margin-bottom: 16px;
+}
+
+.body-text {
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 16px;
+}
+
+a {
+  color: #00ff88;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 255, 136, 0.6);
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-shadow: 0 0 8px #00ff88;
+  text-decoration-color: rgba(0, 255, 136, 0.9);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.scifi-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #00ff88;
+  font-family: 'GT America Standard', sans-serif;
+  font-size: 16px;
+  padding: 12px 16px;
+  outline: none;
+  position: relative;
+}
+
+.scifi-input-wrapper {
+  flex: 1;
+  position: relative;
+  background: transparent;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+.scifi-input-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #00ff88;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  transition: box-shadow 0.2s;
+}
+
+.scifi-input-wrapper:focus-within::before {
+  box-shadow: 0 0 12px #00ff88, inset 0 0 12px #00ff88;
+}
+
+.scifi-input-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: black;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+}
+
+.scifi-input-wrapper .scifi-input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.scifi-input:focus {
+  text-shadow: 0 0 8px #00ff88;
+}
+
+.scifi-input::placeholder {
+  color: rgba(0, 255, 136, 0.5);
+}
+
+.scifi-button {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  color: #00ff88;
+  font-family: 'GT America Standard', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px clamp(24px, calc(17.3vw - 38px), 132px);
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.scifi-button-wrapper {
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.scifi-button-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #00ff88;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.scifi-button-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: black;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+  transition: background 0.2s;
+}
+
+.scifi-button-wrapper:hover::after,
+.scifi-button-wrapper:active::after {
+  background: #00ff88;
+}
+
+.scifi-button-wrapper:hover .scifi-button,
+.scifi-button-wrapper:active .scifi-button {
+  color: black;
+}
+
+.scifi-button-wrapper .scifi-button {
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+}
+
+.viewport-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 4px solid #00ff88;
+  box-shadow: inset 0 0 6px #00ff88, 0 0 6px #00ff88;
+  pointer-events: none;
+}
+
+.section-header {
+  font-family: 'GT America Compressed', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 100%;
+  text-transform: uppercase;
+  margin: 64px 0 24px 0;
+}
+
+.section-header .byline {
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  font-size: 50%;
+  padding-left: 3px;
+}
+
+
+.playlist-toggle {
+  display: none;
+}
+
+.video-list {
+  position: relative;
+  max-height: 220px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, -webkit-mask-image 0.3s ease-out, mask-image 0.3s ease-out;
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  padding-top: 4px;
+}
+
+.playlist-toggle:checked + .video-list {
+  max-height: 1000px;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.playlist-more {
+  display: inline-block;
+  color: #00ff88;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.3s ease-out;
+}
+
+.playlist-more:hover {
+  text-shadow: 0 0 8px #00ff88;
+}
+
+.playlist-toggle:checked + .video-list + .playlist-more {
+  display: none;
+}
+
+.playlist-cta {
+  font-size: 14px;
+  line-height: 150%;
+  margin: 32px 0 0 0;
+}
+
+.subscribe-section {
+  margin-top: 60px;
+}
+
+.subscribe-section .body-text {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.footer-contact {
+  text-align: center;
+  margin-top: 35px;
+  font-size: 18px;
+}
+
+
+.video-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-right: calc(clamp(102px, calc(34.6vw - 22px), 318px) + 12px);
+}
+
+@media (max-width: 639px) {
+  .video-row {
+    flex-direction: column;
+    padding-right: 0;
+  }
+}
+
+.video-thumbnail-wrapper {
+  flex: 1;
+  position: relative;
+  aspect-ratio: 32 / 9;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.video-thumbnail-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #00ff88;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.video-thumbnail-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: black;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+}
+
+.video-thumbnail {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  object-fit: cover;
+  object-position: center 25%;
+  z-index: 1;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+  filter: saturate(0.2) sepia(0.3) hue-rotate(80deg) brightness(0.8);
+  transition: filter 0.2s;
+}
+
+.video-thumbnail-wrapper:hover .video-thumbnail {
+  filter: saturate(0.3) sepia(0.5) hue-rotate(80deg) brightness(1);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-left: clamp(24px, 5vw, 48px) solid #00ff88;
+  border-top: clamp(14px, 3vw, 28px) solid transparent;
+  border-bottom: clamp(14px, 3vw, 28px) solid transparent;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 16px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.video-title {
+  position: absolute;
+  top: clamp(6px, 1.5vw, 12px);
+  left: clamp(8px, 2vw, 16px);
+  z-index: 2;
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #00ff88;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.7), 0 0 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.video-description {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: clamp(102px, calc(34.6vw - 22px), 318px);
+  overflow: hidden;
+}
+
+.video-description p {
+  font-size: 14px;
+  line-height: 140%;
+  margin: 0;
+}
+
+.playlist-toggle:checked + .video-list .video-row {
+  padding-right: 0;
+  align-items: flex-start;
+}
+
+.playlist-toggle:checked + .video-list .video-description {
+  position: static;
+  width: clamp(102px, calc(34.6vw - 22px), 318px);
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+@media (max-width: 639px) {
+  .video-description {
+    position: static;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .video-thumbnail-wrapper {
+    flex: none;
+    width: 100%;
+  }
+
+  .playlist-toggle:checked + .video-list .video-row {
+    align-items: stretch;
+  }
+
+  .playlist-toggle:checked + .video-list .video-description {
+    width: 100%;
+  }
+}
+
+.faq-item {
+  margin-bottom: 44px;
+}
+
+.faq-toggle {
+  display: none;
+}
+
+.faq-answers {
+  max-height: 36px;
+  overflow: hidden;
+}
+
+.faq-toggle:checked + .faq-answers {
+  max-height: none;
+  overflow: visible;
+}
+
+.faq-more {
+  display: inline-block;
+  color: #00ff88;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.faq-more:hover {
+  text-shadow: 0 0 8px #00ff88;
+}
+
+.faq-toggle:checked + .faq-answers + .faq-more {
+  display: none;
+}
+
+.faq-question {
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, calc(0.64vw + 17.7px), 24px);
+  line-height: 130%;
+  margin-bottom: 8px;
+}
+
+.faq-answer {
+  font-family: 'GT America Standard', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  margin: 0 0 16px 0;
+}
+
+.faq-answer:last-child {
+  margin-bottom: 0;
+}
+
+.video-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-modal.active {
+  display: flex;
+}
+
+.video-modal-content {
+  width: 90%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+}
+
+.video-modal-content iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 9px 8px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+  position: relative;
+}
+
+@media (hover: hover) {
+  .task-row:hover {
+    background-color: rgba(0, 255, 136, 0.1);
+}
+}
+
+@media (hover: hover) {
+  .is-sorting .task-row:hover {
+    background-color: transparent;
+  }
+}
+
+.is-sorting a {
+  pointer-events: none;
+}
+
+.task-checkbox-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 2px 0 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.task-checkbox-icon {
+  width: 20px;
+  height: 20px;
+  color: #00ff88;
+}
+
+@media (hover: hover) {
+  .task-checkbox-btn:hover .task-checkbox-icon {
+    filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.8));
+  }
+}
+
+.task-title {
+  flex: 1;
+}
+
+.task-link {
+  text-decoration: none;
+  color: #00ff88;
+}
+
+@media (hover: hover) {
+  .task-link:hover {
+    text-shadow: 0 0 8px #00ff88;
+    text-decoration: none;
+  }
+}
+
+.add-task-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: #00ff88;
+}
+
+@media (hover: hover) {
+  .add-task-row:hover {
+    text-decoration: none;
+  }
+
+  .add-task-row:hover .add-task-text {
+    color: #00ff88;
+    text-shadow: 0 0 8px #00ff88;
+    text-decoration-color: rgba(0, 255, 136, 0.9);
+  }
+
+  .add-task-row:hover .add-task-icon {
+    color: #00ff88;
+    filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.8));
+  }
+}
+
+.add-task-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: rgba(0, 255, 136, 0.6);
+}
+
+.add-task-text {
+  color: rgba(0, 255, 136, 0.6);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 255, 136, 0.4);
+  text-underline-offset: 4px;
+  font-weight: 500;
+}
+
+.inline-edit-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  color: inherit;
+  caret-color: #00ff88;
+  line-height: 100%;
+  display: block;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+.inline-edit-form {
+  margin: 0;
+  padding: 0;
+}
+
+.inline-edit-form .section-header {
+  margin: 0;
+}
+
+a.inline-edit-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  a.inline-edit-link:hover {
+    cursor: text;
+  }
+}
+
+a.inline-edit-link .section-header {
+  margin: 0;
+}
+
+.column-right .section-header:first-child {
+  margin-top: 0;
+  margin-bottom: 21px;
+}
+
+.task-title .inline-edit-link {
+  cursor: text;
+}
+
+.task-title .inline-edit-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.task-title .inline-edit-form {
+  display: block;
+  width: 100%;
+}
+
+.task-title .inline-edit-input {
+  display: block;
+  width: 100%;
+  height: auto;
+  line-height: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+@media (hover: hover) {
+  .task-title .inline-edit-input:hover {
+    text-shadow: none;
+  }
+}
+
+.list-title-wrapper {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.highlight-new {
+  animation: highlight-fade 700ms ease-out forwards;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: rgba(0, 255, 136, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.sortable-ghost {
+  opacity: 0.4;
+  background-color: rgba(0, 255, 136, 0.2);
+}
+
+.task-checkbox-disabled {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0 0 0;
+  opacity: 0.4;
+}
+
+.task-edit-container {
+  background-color: rgba(0, 255, 136, 0.1);
+  border-radius: 4px;
+}
+
+.task-edit-container .task-row {
+  padding-bottom: 0;
+}
+
+.task-edit-container .task-row:hover {
+  background-color: transparent;
+}
+
+.task-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 16px 12px 8px;
+}
+
+.task-delete-link {
+  color: #00ff88;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 255, 136, 0.6);
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .task-delete-link:hover {
+    color: #ef4444;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    text-decoration-color: rgba(239, 68, 68, 0.6);
+  }
+}
+
+.two-column-layout {
+  display: flex;
+  gap: 24px;
+}
+
+.column-left {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  .two-column-layout {
+    flex-direction: column-reverse;
+  }
+}
+
+.three-column-layout {
+  display: flex;
+  gap: 24px;
+}
+
+.column-spacer,
+.column-middle,
+.three-column-layout .column-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.column-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.task-list-outline {
+  border: 1px solid rgba(0, 255, 136, 0.5);
+  padding: 15px;
+}
+
+.copy-tasks-container {
+  text-align: center;
+  padding: 12px 0 0 0;
+}
+
+.copy-tasks-link {
+  color: rgba(0, 255, 136, 0.6);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 255, 136, 0.4);
+  text-underline-offset: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .copy-tasks-link:hover {
+    color: #00ff88;
+    text-shadow: 0 0 8px #00ff88;
+  }
+}
+
+.copy-tasks-copied {
+  color: #00ff88;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.copy-tasks-copied svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 639px) {
+  .three-column-layout {
+    flex-direction: column-reverse;
+  }
+  .column-spacer {
+    height: 1px;
+    flex: 0 0 1px;
+  }
+}

@@ -1,0 +1,6 @@
+<div data-controller="keyboard-focus" class="task-title-wrapper">
+  <input type="text" data-keyboard-focus-target="proxy" autocomplete="off" style="position: absolute; opacity: 0; pointer-events: none;">
+  <%= link_to edit_task_path(task), class: "task-link inline-edit-link", data: {turbo_frame: dom_id(task), turbo_prefetch: false, action: "click->keyboard-focus#activate"} do %>
+    <%= task.title %>
+  <% end %>
+</div>

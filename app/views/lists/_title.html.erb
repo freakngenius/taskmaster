@@ -1,0 +1,5 @@
+<%= turbo_frame_tag dom_id(list, :title), class: "list-title-wrapper" do %>
+  <%= link_to edit_list_path(list), class: "inline-edit-link" do %>
+    <h2 class="section-header"><%= list.name %></h2>
+  <% end %>
+<% end %>

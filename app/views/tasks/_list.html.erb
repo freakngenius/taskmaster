@@ -1,0 +1,2 @@
+<%= turbo_frame_tag "new_task_form" %>
+<%= render list.tasks.not_completed.order(:position), highlight_task_id: local_assigns[:highlight_task_id] %>

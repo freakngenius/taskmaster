@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "new_task_form" do %>
+  <div class="task-row">
+    <span class="task-checkbox-disabled">
+      <%= lucide_icon('circle', class: 'task-checkbox-icon') %>
+    </span>
+    <span class="task-title"><%= render "inline_title_form", task: @task %></span>
+  </div>
+<% end %>

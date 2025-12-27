@@ -1,0 +1,5 @@
+<%= turbo_frame_tag list do %>
+  <div class="list-item body-text">
+    <%= link_to list.name, list, data: {turbo_frame: "_top"} %>
+  </div>
+<% end %>

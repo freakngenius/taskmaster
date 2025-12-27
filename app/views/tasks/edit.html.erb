@@ -1,0 +1,13 @@
+<%= turbo_frame_tag @task do %>
+  <div class="task-edit-container">
+    <div class="task-row">
+      <span class="task-checkbox-disabled">
+        <%= lucide_icon('circle', class: 'task-checkbox-icon') %>
+      </span>
+      <span class="task-title"><%= render "inline_title_form", task: @task %></span>
+    </div>
+    <div class="task-edit-actions">
+      <%= link_to "Delete", task_path(@task), class: "task-delete-link", data: {turbo_method: :delete} %>
+    </div>
+  </div>
+<% end %>

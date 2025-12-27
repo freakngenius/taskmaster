@@ -1,0 +1,22 @@
+<div class="content">
+  <%# Inline title edit - Turbo extracts just this frame when accessed from list show %>
+  <%= turbo_frame_tag dom_id(@list, :title) do %>
+    <%= form_with model: @list,
+        class: "inline-edit-form",
+        data: {
+          controller: "inline-edit",
+          action: "keydown.enter->inline-edit#submitForm keydown.esc->inline-edit#abort"
+        } do |f| %>
+      <%= f.text_field :name,
+          class: "section-header inline-edit-input",
+          data: {
+            inline_edit_target: "input",
+            action: "blur->inline-edit#submitForm"
+          } %>
+    <% end %>
+  <% end %>
+
+  <h1>Edit List</h1>
+
+  <%= render "form", list: @list %>
+</div>

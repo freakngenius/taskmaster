@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "new_task_form" do %>
+  <%= render @task %>
+<% end %>
+
+<div class="content">
+  <h1><%= @task.title %></h1>
+
+  <%= render @task %>
+
+  <div class="body-text">
+    List: <%= link_to @task.list.name, @task.list, data: {turbo_frame: "_top"} %>
+  </div>
+
+  <div class="input-group">
+    <div class="scifi-button-wrapper">
+      <%= link_to "Edit", edit_task_path(@task), class: "scifi-button", data: {turbo_frame: dom_id(@task)} %>
+    </div>
+    <div class="scifi-button-wrapper">
+      <%= link_to "Back", @task.list, class: "scifi-button", data: {turbo_frame: "_top"} %>
+    </div>
+  </div>
+</div>

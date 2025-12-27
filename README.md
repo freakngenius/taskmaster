@@ -1,24 +1,21 @@
-# README
+# Taskmaster
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails 8 application.
 
-Things you may want to cover:
+## Notable Bits
 
-* Ruby version
+### [`livekit-agent/`](livekit-agent/)
 
-* System dependencies
+A modified version of the starter voice AI agent that LiveKit gives you. This is a python server agent built with [LiveKit Agents](https://github.com/livekit/agents) and deployed to [LiveKit Cloud](https://cloud.livekit.io/). The task_agent_controller.js connects to this backend with WebRTC to handle the conversation. LiveKit does all the orchestration with ElevenLabs for voice and Whisper (I think) for the speech-to-text.
 
-* Configuration
+### [`task_agent_controller.js`](app/javascript/controllers/task_agent_controller.js)
 
-* Database creation
+The Stimulus controller that powers the voice interface. Handles microphone activation, connects to LiveKit rooms via WebRTC, manages the audio waveform visualization, and defines all the tool configurations that let the AI agent interact with the task list. The agent's system prompt and available tools (create_task, update_task, delete_task, reorder_task, etc.) are all configured here.
 
-* Database initialization
+### [`app/controllers/`](app/controllers/)
 
-* How to run the test suite
+The Rails controllers that handle user interactions. The lists and tasks controllers serve the HTML interface that users see and interact with directly. The API tasks controller provides the JSON endpoints that the LiveKit agent calls when executing tool actions—each endpoint returns undo instructions so the agent can reverse its actions if needed.
 
-* Services (job queues, cache servers, search engines, etc.)
+### [`app/models/`](app/models/)
 
-* Deployment instructions
-
-* ...
+The Task and List models that get persisted to the database.

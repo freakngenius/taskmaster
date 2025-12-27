@@ -1,0 +1,383 @@
+<div class="content <%= 'fresh-user' if @list.pristine? %>" data-controller="task-agent sound wakeword" data-task-agent-fresh-user-value="<%= @list.pristine? %>">
+  <script>console.log("Guest ID: <%= @list.guest_id %>")</script>
+  <%= turbo_stream_from @list %>
+
+  <style>
+    .voice-agent-area {
+      width: 100%;
+      height: 100px;
+      margin-bottom: clamp(5px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    @keyframes breathe {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 15px currentColor;
+      }
+      /* Inhale - faster rise (0-35%) */
+      35% {
+        transform: scale(1.14);
+        box-shadow: 0 0 30px currentColor;
+      }
+      /* Hold at peak - subtle plateau (35-45%) */
+      45% {
+        transform: scale(1.12);
+        box-shadow: 0 0 28px currentColor;
+      }
+      /* Exhale - slower fall with ease-out feel (45-100%) */
+      75% {
+        transform: scale(1.04);
+        box-shadow: 0 0 18px currentColor;
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 15px currentColor;
+      }
+    }
+    .start-circle-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    .start-circle-wrapper:hover {
+      transform: scale(1.1);
+    }
+    .start-circle-wrapper:active {
+      transform: scale(0.95);
+    }
+    .start-circle-wrapper:has(.shrinking),
+    .start-circle-wrapper:has(.stretching) {
+      cursor: default;
+    }
+    .start-circle-wrapper:has(.shrinking):hover,
+    .start-circle-wrapper:has(.stretching):hover,
+    .start-circle-wrapper:has(.shrinking):active,
+    .start-circle-wrapper:has(.stretching):active {
+      transform: none;
+    }
+    .start-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: currentColor;
+      transition: box-shadow 0.3s ease, opacity 0.3s ease;
+      box-shadow: 0 0 15px currentColor;
+      opacity: 0.8;
+      animation: breathe 4.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .start-circle-wrapper:hover .start-circle {
+      box-shadow: 0 0 35px currentColor;
+      opacity: 1;
+    }
+    .start-circle.hidden {
+      display: none;
+    }
+    .start-circle.shrinking {
+      width: 5px;
+      height: 5px;
+      cursor: default;
+      box-shadow: 0 0 10px currentColor;
+      animation: breathe 4.5s cubic-bezier(0.4, 0, 0.6, 1) infinite paused;
+      transform: scale(1);
+    }
+    .start-circle.shrinking:hover {
+      transform: none;
+    }
+    .start-circle.stretching {
+      width: 100%;
+      height: 5px;
+      border-radius: 2px;
+      cursor: default;
+      box-shadow: 0 0 10px currentColor;
+      animation: none;
+    }
+    .start-circle.stretching:hover {
+      transform: none;
+    }
+    .start-circle.fading {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      animation: none;
+    }
+    .waveform-container {
+      position: absolute;
+      inset: 0;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    .waveform-container.active {
+      display: block;
+    }
+    .waveform-container.visible {
+      opacity: 1;
+    }
+    .waveform-canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .waveform-stop-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      padding: 8px;
+      background: #031311;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      color: currentColor;
+    }
+    .waveform-stop-button svg {
+      width: 100%;
+      height: 100%;
+      background: #031311;
+      border-radius: 50%;
+    }
+    @media (hover: hover) {
+      .waveform-container:hover .waveform-stop-button {
+        opacity: 1;
+      }
+    }
+    h1 {
+      margin-bottom: clamp(5px, 1.5vw, 0.25em);
+    }
+    h1.heading-shrunk {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      margin: 0;
+      z-index: 100;
+      /* Scale from 18px at 639px viewport to 24px at 900px viewport */
+      font-size: clamp(18px, calc(3.3px + 2.3vw), 24px);
+      white-space: nowrap;
+    }
+    .getting-started-list {
+      padding-left: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+    .getting-started-list li {
+      counter-increment: steps;
+      padding-left: 1.4em;
+      position: relative;
+      max-height: 0;
+      margin-bottom: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease-out, margin-bottom 0.5s ease-out;
+    }
+    .getting-started-list li::before {
+      content: counter(steps) ".";
+      position: absolute;
+      left: 0;
+    }
+    .getting-started-list li.revealing {
+      max-height: 16em;
+      margin-bottom: 0.75em;
+      opacity: 1;
+      animation: swipeReveal 1s ease-out forwards;
+    }
+    @keyframes swipeReveal {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+      100% {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+    .getting-started-list li.collapsing {
+      max-height: 0 !important;
+      margin-bottom: 0 !important;
+      opacity: 0;
+      transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out, opacity 0.2s ease-out;
+    }
+    .getting-started-list li.glowing {
+      animation: swipeReveal 1s ease-out forwards, textGlow 2s ease-in-out infinite;
+    }
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 0 0 4px currentColor;
+      }
+      50% {
+        text-shadow: 0 0 12px currentColor, 0 0 20px currentColor;
+      }
+    }
+    .tutorial-header {
+      visibility: hidden;
+    }
+    .tutorial-header.typing {
+      visibility: visible;
+    }
+    .tutorial-header .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.85em;
+      background: currentColor;
+      margin-left: 2px;
+      vertical-align: baseline;
+      animation: blink 0.7s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .column-right {
+      flex: 1;
+      min-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      height: 0;
+      transition: opacity 0.3s ease-out;
+    }
+    .fresh-user .column-right {
+      opacity: 1;
+      pointer-events: auto;
+      height: auto;
+    }
+    @media (max-width: 639px) {
+      .column-right {
+        display: none;
+      }
+      .fresh-user .column-right {
+        display: block;
+      }
+    }
+    .column-right.fading-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .activate-link {
+      cursor: pointer;
+    }
+    .activate-link.hidden {
+      display: none;
+    }
+    .activate-spinner {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .activate-spinner.visible {
+      display: block;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .activate-denied {
+      display: none;
+      text-align: center;
+    }
+    .activate-denied.visible {
+      display: block;
+    }
+    .activate-status {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .activate-silence {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .activate-silence.visible {
+      display: block;
+    }
+    .start-circle.pre-activation {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .start-circle-wrapper:has(.pre-activation) {
+      position: absolute;
+      pointer-events: none;
+    }
+    .start-circle-wrapper:has(.pre-activation):hover {
+      transform: none;
+    }
+    .start-circle.fade-in {
+      transition: opacity 1.5s ease-out;
+    }
+    .three-column-layout.pre-activation {
+      display: none;
+    }
+  </style>
+
+  <% if @list.pristine? %>
+  <h1 data-controller="fit-text" data-task-agent-target="heading">Task Master</h1>
+  <% else %>
+  <h1 class="heading-shrunk" data-task-agent-target="heading">Task Master</h1>
+  <% end %>
+
+  <div class="voice-agent-area">
+    <a class="activate-link" data-task-agent-target="activateLink" data-action="click->task-agent#activateMic click->sound#unlock">Activate Mic</a>
+    <div class="activate-status">
+      <div class="activate-spinner" data-task-agent-target="activateSpinner"></div>
+      <div class="activate-silence" data-task-agent-target="activateSilence">Silence. Mic Muted?</div>
+    </div>
+    <div class="activate-denied" data-task-agent-target="activateDenied">Mic Denied. Reset Permissions.</div>
+    <div class="start-circle-wrapper">
+      <div class="start-circle pre-activation" data-task-agent-target="startCircle" data-wakeword-target="trigger" data-action="click->task-agent#startAgent"></div>
+    </div>
+    <div class="waveform-container" data-task-agent-target="waveformContainer" data-action="click->task-agent#stopAgent">
+      <canvas class="waveform-canvas" data-task-agent-target="waveformCanvas"></canvas>
+      <div class="waveform-stop-button">
+        <%= lucide_icon('circle-pause', class: 'waveform-stop-icon') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="three-column-layout <%= 'pre-activation' if @list.pristine? %>" data-task-agent-target="content">
+    <div class="column-spacer"></div>
+    <div class="column-middle" data-controller="copy-tasks">
+      <div class="task-list-outline">
+        <%= render "title", list: @list %>
+
+        <%= render "tasks/new_task_button", list: @list %>
+
+        <div id="tasks">
+          <%= turbo_frame_tag "task_list", src: tasks_path(list_id: @list.id), data: {controller: "sortable"} do %>
+            <%= render "tasks/list", list: @list %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="copy-tasks-container">
+        <a class="copy-tasks-link" data-copy-tasks-target="link" data-action="click->copy-tasks#copy">Copy list</a>
+        <span class="copy-tasks-copied hidden" data-copy-tasks-target="copied">
+          <%= lucide_icon('check', class: 'copy-tasks-check-icon') %>
+          Copied
+        </span>
+      </div>
+    </div>
+
+    <div class="column-right">
+      <h2 class="section-header tutorial-header" data-task-agent-target="tutorialHeader" data-text="READY?"></h2>
+      <ol class="getting-started-list" data-task-agent-target="tutorialList">
+        <li>Say <span style="display: inline-block; padding-right: 0.5em">"Task Master"</span>to begin</li>
+        <li>Now say:<br><span style="display: inline-block; padding-right: 0.5em">"Add to my list, Build lightsaber"</span></li>
+        <li>Now tell me to clear the list<p style="margin-top: 0.75em; margin-bottom: 0;">Try adding 3 real tasks to get done. Talk naturally, I can modify, reorder, and mark tasks complete. I can undo any mistakes.</p></li>
+        <li>You can also change tasks yourself by clicking.</li>
+      </ol>
+    </div>
+  </div>
+
+</div>

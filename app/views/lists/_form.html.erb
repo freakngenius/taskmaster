@@ -1,0 +1,27 @@
+<%= form_with(model: list) do |form| %>
+  <% if list.errors.any? %>
+    <div class="body-text" style="color: #ff4444;">
+      <p><%= pluralize(list.errors.count, "error") %> prohibited this list from being saved:</p>
+      <ul>
+        <% list.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input-group">
+    <div class="scifi-input-wrapper">
+      <%= form.text_field :name, class: "scifi-input", placeholder: "List name" %>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="scifi-button-wrapper">
+      <%= form.submit class: "scifi-button" %>
+    </div>
+    <div class="scifi-button-wrapper">
+      <%= link_to "Back", lists_path, class: "scifi-button" %>
+    </div>
+  </div>
+<% end %>

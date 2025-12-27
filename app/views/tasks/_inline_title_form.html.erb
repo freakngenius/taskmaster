@@ -1,0 +1,15 @@
+<%= form_with model: task,
+    class: "inline-edit-form",
+    data: {
+      controller: "inline-edit",
+      action: "keydown.enter->inline-edit#submitForm keydown.esc->inline-edit##{task.new_record? ? 'cancelNew' : 'abort'}"
+    } do |f| %>
+  <%= f.hidden_field :list_id if task.new_record? %>
+  <%= f.text_field :title,
+      class: "task-link inline-edit-input",
+      autofocus: true,
+      data: {
+        inline_edit_target: "input",
+        action: "blur->inline-edit##{task.new_record? ? 'submitFormIfPresent' : 'submitForm'}"
+      } %>
+<% end %>

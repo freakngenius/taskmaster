@@ -1,0 +1,40 @@
+<%= form_with(model: task) do |form| %>
+  <% if task.errors.any? %>
+    <div class="body-text" style="color: #ff4444;">
+      <p><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</p>
+      <ul>
+        <% task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input-group">
+    <div class="scifi-input-wrapper">
+      <%= form.text_field :title, class: "scifi-input", placeholder: "Task title", autofocus: true %>
+    </div>
+  </div>
+
+  <% if task.new_record? %>
+    <%= form.hidden_field :list_id %>
+  <% else %>
+    <div class="body-text">
+      <%= form.label :list_id %>
+      <%= form.collection_select :list_id, @lists || List.all, :id, :name, {}, {class: "scifi-input"} %>
+    </div>
+  <% end %>
+
+  <div class="input-group">
+    <div class="scifi-button-wrapper">
+      <%= form.submit class: "scifi-button" %>
+    </div>
+    <div class="scifi-button-wrapper">
+      <% if task.persisted? %>
+        <%= link_to "Cancel", task_path(task), class: "scifi-button" %>
+      <% else %>
+        <%= link_to "Cancel", task.list, class: "scifi-button" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
