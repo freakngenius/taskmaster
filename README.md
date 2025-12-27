@@ -1,8 +1,10 @@
-# Taskmaster
+# Task Master
 
-A Rails 8 application.
+Try a live version at https://taskmaster.keithschacht.com . This repo is not a fully functioning app because Task Master lives as part of a larger repo that is coupled to a few other pieces. However, I extracted the interesting parts of code into this repo in case you want to poke around. If there is enough interest, I/we could turn this into an open-source version of Task Master so it could be run as a stand-alone project.
 
 ## Notable Bits
+
+Core architecture: When you ask the agent to do something, a livekit javascript WebRTC connection hears you, it routes the audio to a livekit server agent running in LiveKit Cloud, that agent decides to make a tool call which goes to app/controllers/api/tasks_controller.rb, a task.rb model instance updates and it broadcasts the change to your browser (and all other browsers) that are listening via an ActionCable socket connection.
 
 ### [`livekit-agent/`](livekit-agent/)
 
