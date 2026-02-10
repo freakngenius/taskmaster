@@ -197,7 +197,7 @@ body {
   padding: 32px !important;
   padding-bottom: 80px !important;
   overflow-x: auto !important;
-  overflow-y: hidden !important;
+  overflow-y: visible !important;
   align-items: flex-start !important;
   width: auto !important;
   min-height: 0 !important;
