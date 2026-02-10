@@ -29,27 +29,35 @@ export default class extends Controller {
       return
     }
 
+    // Get the sticky-note container to respect aspect ratio
+    const stickyNote = element.closest('.sticky-note')
+    if (!stickyNote) return
+
     // Get the container dimensions (sticky-content)
     const container = element.closest('.sticky-content')
     if (!container) return
 
+    // Get actual rendered dimensions accounting for padding
+    const containerStyle = window.getComputedStyle(container)
     const containerHeight = container.clientHeight
     const containerWidth = container.clientWidth
+    const paddingTop = parseFloat(containerStyle.paddingTop) || 16
+    const paddingBottom = parseFloat(containerStyle.paddingBottom) || 16
+    const paddingLeft = parseFloat(containerStyle.paddingLeft) || 16
+    const paddingRight = parseFloat(containerStyle.paddingRight) || 16
 
     // Reserve space for due date if present
     const dueDateLabel = container.querySelector('.sticky-due-date')
-    const reservedHeight = dueDateLabel ? dueDateLabel.offsetHeight + 8 : 0 // 8px for padding
-    const availableHeight = containerHeight - reservedHeight
+    const reservedHeight = dueDateLabel ? dueDateLabel.offsetHeight + 4 : 0
 
-    // Get current computed font size
-    const computedStyle = window.getComputedStyle(element)
-    const currentFontSize = parseFloat(computedStyle.fontSize)
-    const lineHeight = parseFloat(computedStyle.lineHeight) || currentFontSize * 1.4
+    // Calculate available space
+    const availableHeight = containerHeight - paddingTop - paddingBottom - reservedHeight
+    const availableWidth = containerWidth - paddingLeft - paddingRight
 
     // Determine if we're in the today pane or projects container
     const isToday = element.closest('.today-pane') !== null
     const maxFontSize = isToday ? 24 : 27 // Match the CSS defaults
-    const minFontSize = isToday ? 12 : 14
+    const minFontSize = isToday ? 10 : 12
 
     // Binary search for optimal font size
     let low = minFontSize
@@ -58,7 +66,7 @@ export default class extends Controller {
 
     // Try the max size first
     element.style.fontSize = `${maxFontSize}px`
-    if (this.fitsInContainer(element, availableHeight, containerWidth)) {
+    if (this.fitsInContainer(element, availableHeight, availableWidth)) {
       optimalSize = maxFontSize
     } else {
       // Binary search for the right size
@@ -66,7 +74,7 @@ export default class extends Controller {
         const mid = (low + high) / 2
         element.style.fontSize = `${mid}px`
 
-        if (this.fitsInContainer(element, availableHeight, containerWidth)) {
+        if (this.fitsInContainer(element, availableHeight, availableWidth)) {
           low = mid
           optimalSize = mid
         } else {
