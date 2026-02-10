@@ -1,0 +1,1279 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Noto+Sans+Display:wght@400;700&family=Unna:wght@400;700&family=Sour+Gummy:wght@400;700&family=Source+Code+Pro:wght@400;700&family=Syne+Mono&display=swap');
+
+/* ========================================
+   BODY OVERRIDE - Remove default padding for full-width layout
+   ======================================== */
+
+body {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  height: 100vh !important;
+  background: rgba(107, 114, 128, 0.5) !important;
+}
+
+/* ========================================
+   OVERRIDE CONTENT CONTAINER
+   ======================================== */
+
+.content {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* ========================================
+   MAIN LAYOUT
+   ======================================== */
+
+.sticky-board {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  gap: 0;
+}
+
+.sticky-board.pre-activation {
+  display: none;
+}
+
+/* Layout reversed - Today pane on right, Projects on left */
+.sticky-board.layout-reversed {
+  flex-direction: row-reverse;
+}
+
+.projects-container.layout-reversed {
+  flex-direction: row-reverse !important;
+}
+
+/* ========================================
+   TODAY PANE - Left Sidebar (25%)
+   ======================================== */
+
+.today-pane {
+  width: 25% !important;
+  flex: none !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  position: relative !important;
+  z-index: 50;
+  padding: 0 !important;
+  padding-bottom: 48px !important;
+  min-height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.today-header-section {
+  padding: 24px;
+  padding-top: 80px; /* Account for fixed help button */
+}
+
+.today-header {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: white !important;
+  margin: 0 0 16px 0 !important;
+  text-align: center !important;
+  text-transform: none !important;
+}
+
+.today-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.today-tasks {
+  flex: 1 !important;
+  display: block !important;
+  overflow-y: auto !important;
+  padding: 24px !important;
+  padding-bottom: 64px !important;
+}
+
+.today-tasks::-webkit-scrollbar { display: none; }
+.today-tasks { scrollbar-width: none; }
+
+.today-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 8px;
+}
+
+/* Turbo frames inside grid should be grid items */
+.today-notes-grid > turbo-frame {
+  display: block;
+}
+
+.today-pane .sticky-note {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+/* Today pane stickies - 15% larger text */
+.today-pane .sticky-text {
+  font-size: 24px;
+}
+
+/* Today pane sticky icons - smaller to fit hover bar with 4 buttons */
+.today-pane .sticky-action {
+  width: 28px;
+  height: 28px;
+}
+
+.today-pane .sticky-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.today-pane .sticky-hover-bar {
+  gap: 4px;
+}
+
+/* ========================================
+   PROJECTS PANE - Right Side (75%)
+   ======================================== */
+
+.projects-pane {
+  width: 75% !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+  height: 100% !important;
+}
+
+/* Voice Agent Area - Top of projects pane */
+.voice-agent-area {
+  height: 80px !important;
+  min-height: 80px !important;
+  padding-top: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  width: 100% !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  z-index: 10;
+}
+
+/* Mic icon and start circle - off state positioning */
+.voice-agent-area .mic-icon-wrapper,
+.voice-agent-area .start-circle-wrapper {
+  margin-top: -34px;
+}
+
+/* Waveform visualizer - active state positioning */
+.voice-agent-area .waveform-container {
+  margin-top: -7px;
+}
+
+/* Projects Container - Scrollable */
+.projects-container {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 24px !important;
+  padding: 32px !important;
+  padding-bottom: 80px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  align-items: flex-start !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: calc(100vh - 80px) !important;
+}
+
+.projects-container::-webkit-scrollbar { display: none; }
+.projects-container { scrollbar-width: none; }
+
+/* ========================================
+   PROJECT COLUMN
+   ======================================== */
+
+.project-column {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+  height: auto;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  max-width: 85%;
+}
+
+.project-header-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.project-move-btn {
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 200ms ease, background 200ms ease;
+  color: white;
+  flex-shrink: 0;
+}
+
+.project-header:hover .project-move-btn {
+  opacity: 0.6;
+}
+
+.project-move-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.project-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.project-edit-btn {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 200ms ease, background 200ms ease;
+  flex-shrink: 0;
+}
+
+.project-header:hover .project-edit-btn {
+  opacity: 1;
+}
+
+.project-edit-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.project-edit-icon {
+  width: 16px;
+  height: 16px;
+  color: white;
+}
+
+.sticky-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  overflow-y: visible;
+  overflow-x: visible;
+  padding-right: 8px;
+  padding-bottom: 64px;
+  min-height: 0;
+}
+
+.sticky-notes::-webkit-scrollbar { display: none; }
+.sticky-notes { scrollbar-width: none; }
+
+/* ========================================
+   ADD PROJECT COLUMN
+   ======================================== */
+
+.add-project-column {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: flex-start;
+  padding-top: 0;
+}
+
+.add-project-title-space {
+  height: 34px; /* Match project-name line height */
+  flex-shrink: 0;
+}
+
+.add-project-btn {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  height: auto !important;
+  min-height: auto !important;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.add-project-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: white;
+}
+
+.add-project-icon {
+  width: 60px;
+  height: 60px;
+}
+
+/* ========================================
+   STICKY NOTE
+   ======================================== */
+
+.sticky-note {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease, opacity 200ms ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sticky-note:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.sticky-note:active {
+  cursor: grabbing;
+}
+
+.sticky-note.completed {
+  opacity: 0.6;
+}
+
+.sticky-note.completed .sticky-text {
+  text-decoration: line-through;
+}
+
+.sticky-note.selected {
+  border: 2px solid white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.sticky-content {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-text {
+  flex: 1;
+  font-family: 'Noto Sans Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 21px;
+  line-height: 1.4;
+  color: #1a1a1a;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  word-wrap: break-word;
+  overflow: hidden;
+  cursor: text;
+}
+
+/* Projects pane stickies - 15% smaller */
+.projects-container .sticky-note {
+  max-width: 85%;
+}
+
+.projects-container .sticky-text {
+  font-size: 27px;
+}
+
+.sticky-text:empty:before {
+  content: "Enter task";
+  color: rgba(0, 0, 0, 0.3);
+}
+
+/* Due date label */
+.sticky-due-date {
+  font-family: 'Noto Sans Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.sticky-due-date.due-today {
+  display: inline-block;
+  background: rgba(220, 38, 38, 0.9);
+  color: white !important;
+  padding: 2px 6px;
+  border-radius: 3px;
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* Hidden date input */
+.hidden-date-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Dark background sticky notes */
+.sticky-note.dark-bg .sticky-text {
+  color: white;
+}
+
+.sticky-note.dark-bg .sticky-text:empty:before {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sticky-hover-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  z-index: 10;
+}
+
+.sticky-note:hover .sticky-hover-bar {
+  opacity: 1;
+}
+
+.sticky-action {
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease;
+}
+
+.sticky-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sticky-icon {
+  width: 49px;
+  height: 49px;
+  color: white;
+}
+
+.sticky-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.star-icon.starred {
+  fill: #FFD700;
+  color: #FFD700;
+}
+
+/* Add Sticky Button */
+.add-sticky-btn {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  background: transparent;
+  border: 2px dashed rgba(156, 163, 175, 1);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+}
+
+/* Projects pane add button - match sticky size */
+.projects-container .add-sticky-btn {
+  max-width: 85%;
+}
+
+.add-sticky-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.add-sticky-icon {
+  width: 60px;
+  height: 60px;
+}
+
+/* ========================================
+   TOP LEFT CONTROLS - Help & Layout Toggle
+   ======================================== */
+
+.top-left-controls {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+  transition: all 300ms ease;
+}
+
+/* When reversed, move to top right */
+.top-left-controls.layout-reversed {
+  left: auto;
+  right: 24px;
+}
+
+.help-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.help-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.help-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.layout-toggle-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.layout-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.layout-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   TOP CONTROLS - Eye button (Top Right)
+   ======================================== */
+
+.top-controls {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+  transition: all 300ms ease;
+}
+
+/* When reversed, move to top left and reorder buttons */
+.top-controls.layout-reversed {
+  right: auto;
+  left: 24px;
+  flex-direction: row-reverse;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.control-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   ZOOM CONTROLS - Bottom Right
+   ======================================== */
+
+.zoom-controls {
+  position: fixed;
+  bottom: 16px;
+  right: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.zoom-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.zoom-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.zoom-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   MIC ICON
+   ======================================== */
+
+.mic-icon-wrapper {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.mic-icon-wrapper:hover {
+  background: rgba(255, 255, 255, 0.6) !important;
+}
+
+.mic-icon {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* ========================================
+   HELP MODAL
+   ======================================== */
+
+.help-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-modal.open {
+  display: flex;
+}
+
+.help-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.help-modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 32px;
+  max-width: 900px;
+  width: calc(100% - 32px);
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.help-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 24px 0;
+}
+
+.help-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.help-column {
+  min-width: 0;
+}
+
+.help-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.help-shortcuts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.help-shortcut {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.help-key {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 12px;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  min-width: 60px;
+  text-align: center;
+  color: #374151;
+}
+
+.help-desc {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.help-voice {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-voice-activate {
+  background: #eff6ff;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.help-voice-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0 0 4px 0;
+}
+
+.help-voice-command {
+  font-family: monospace;
+  font-size: 14px;
+  color: #1e40af;
+  margin: 0;
+}
+
+.help-voice-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.help-voice-example {
+  font-family: monospace;
+  font-size: 13px;
+  color: #4b5563;
+  background: #f9fafb;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.help-modal-close {
+  margin-top: 24px;
+  width: 100%;
+  padding: 12px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.help-modal-close:hover {
+  background: #1f2937;
+}
+
+/* ========================================
+   PROJECT MODAL
+   ======================================== */
+
+.project-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  transform: none !important;
+}
+
+.project-modal.open {
+  display: flex;
+}
+
+.project-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.project-modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 32px;
+  max-width: 448px;
+  width: calc(100% - 64px);
+  z-index: 10000;
+}
+
+.project-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.project-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.project-modal-x {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease;
+}
+
+.project-modal-x:hover {
+  background: #f3f4f6;
+}
+
+.project-modal-x-icon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+}
+
+.project-modal-field {
+  margin-bottom: 24px;
+}
+
+.project-modal-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.project-modal-input {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  box-sizing: border-box;
+}
+
+.project-modal-input:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+}
+
+.project-modal-colors {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.project-color-btn {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.project-color-btn:hover {
+  transform: scale(1.05);
+}
+
+.project-color-btn.selected {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  transform: scale(1.1);
+}
+
+.project-color-btn.color-picker-btn {
+  background: conic-gradient(
+    from 0deg,
+    #ff0000, #ff8000, #ffff00, #80ff00,
+    #00ff00, #00ff80, #00ffff, #0080ff,
+    #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000
+  );
+  position: relative;
+}
+
+.project-color-btn.color-picker-btn::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hidden-color-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.project-modal-font-colors {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 12px;
+}
+
+.font-color-btn {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.font-color-btn:hover {
+  transform: scale(1.1);
+}
+
+.font-color-btn.selected {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  transform: scale(1.15);
+}
+
+.project-modal-preview {
+  width: 100%;
+  height: 96px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FEF3C7;
+}
+
+.project-modal-preview-text {
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.project-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.project-modal-cancel {
+  flex: 1;
+  padding: 12px;
+  background: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.project-modal-cancel:hover {
+  background: #f9fafb;
+}
+
+.project-modal-delete {
+  padding: 12px;
+  background: white;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.project-modal-delete:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.project-modal-submit {
+  flex: 1;
+  padding: 12px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.project-modal-submit:hover {
+  background: #1f2937;
+}
+
+.project-modal-submit:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   DRAG & DROP STATES
+   ======================================== */
+
+.sortable-ghost {
+  opacity: 0.4;
+}
+
+.sortable-drag {
+  cursor: grabbing !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.sortable-fallback {
+  opacity: 0.9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   HIDE COMPLETED STATE
+   ======================================== */
+
+.hide-completed .sticky-note.completed {
+  display: none !important;
+}
+
+/* Ensure turbo-frames collapse when their sticky is hidden */
+.hide-completed turbo-frame:has(.sticky-note.completed) {
+  display: none !important;
+}
+
+/* ========================================
+   FOOTER LABEL
+   ======================================== */
+
+.footer-label {
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+  color: white;
+  z-index: 60;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.footer-heart {
+  width: 16px;
+  height: 16px;
+  color: #ef4444;
+  fill: #ef4444;
+  margin-right: 12px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .sticky-board {
+    flex-direction: column;
+  }
+
+  .today-pane {
+    width: 100% !important;
+    max-height: 40vh;
+  }
+
+  .projects-pane {
+    width: 100% !important;
+  }
+
+  .projects-container {
+    padding: 16px !important;
+  }
+
+  .project-column,
+  .add-project-column {
+    width: 250px;
+  }
+
+  .help-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .help-btn {
+    top: 16px;
+    left: 16px;
+  }
+
+  .top-controls {
+    top: 16px;
+    right: 16px;
+  }
+}

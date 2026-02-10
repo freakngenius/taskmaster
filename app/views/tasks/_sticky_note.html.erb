@@ -1,0 +1,41 @@
+<%= turbo_frame_tag task do %>
+  <% note_color = task.color.presence || task.project&.color.presence || '#FEF3C7' %>
+  <% font_color = (task.project&.respond_to?(:font_color) && task.project&.font_color.present?) ? task.project.font_color : '#1a1a1a' %>
+  <% due_date = task.due_at&.to_date %>
+  <% is_due_today = due_date == Date.current %>
+  <% show_due_date = due_date.present? && due_date >= Date.current %>
+  <div class="sticky-note <%= 'completed' if task.completed %> <%= 'starred' if task.starred %>"
+       style="background-color: <%= note_color %>;"
+       data-task-id="<%= task.id %>"
+       data-controller="task-action"
+       data-task-action-due-date-value="<%= due_date&.iso8601 %>">
+    <div class="sticky-content">
+      <div class="sticky-text"
+           style="color: <%= font_color %>;"
+           contenteditable="<%= task.completed ? 'false' : 'true' %>"
+           data-controller="task-edit auto-resize"
+           data-task-id="<%= task.id %>"
+           data-action="blur->task-edit#blur keydown->task-edit#keydown"><%= task.title %></div>
+      <% if show_due_date %>
+        <div class="sticky-due-date <%= 'due-today' if is_due_today %>" style="color: <%= font_color %>;">
+          <%= is_due_today ? 'Today' : due_date.strftime('%b %d') %>
+        </div>
+      <% end %>
+    </div>
+    <div class="sticky-hover-bar">
+      <button type="button" class="sticky-action" data-action="click->task-action#complete">
+        <%= lucide_icon('check', class: 'sticky-icon') %>
+      </button>
+      <button type="button" class="sticky-action" data-action="click->task-action#star">
+        <%= lucide_icon('star', class: "sticky-icon star-icon #{'starred' if task.starred}") %>
+      </button>
+      <button type="button" class="sticky-action" data-action="click->task-action#openDatePicker">
+        <svg class="sticky-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+      </button>
+      <button type="button" class="sticky-action" data-action="click->task-action#delete">
+        <%= lucide_icon('trash-2', class: 'sticky-icon') %>
+      </button>
+    </div>
+    <input type="date" class="hidden-date-input" data-action="change->task-action#dateChanged">
+  </div>
+<% end %>
