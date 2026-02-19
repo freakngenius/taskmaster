@@ -1,0 +1,10 @@
+<div class="list-view-container" id="list-view-tasks" style="display: none;">
+  <% all_tasks = list.tasks
+       .not_completed
+       .where(starred: [false, nil])
+       .includes(:project)
+       .order(Arel.sql('due_at ASC NULLS LAST, position ASC')) %>
+  <% all_tasks.each do |task| %>
+    <%= render "tasks/sticky_note", task: task, list: list, show_project_label: true %>
+  <% end %>
+</div>

@@ -1,33 +1,21 @@
-<div class="content <%= 'fresh-user' if @list.pristine? %>" data-controller="task-agent sound wakeword" data-task-agent-fresh-user-value="<%= @list.pristine? %>">
+<div class="content <%= 'fresh-user' if @list.pristine? %>" data-controller="task-agent sound wakeword keyboard-shortcuts help-modal" data-task-agent-fresh-user-value="<%= @list.pristine? %>" data-wakeword-wakeword-value="hitchcock">
   <script>console.log("Guest ID: <%= @list.guest_id %>")</script>
   <%= turbo_stream_from @list %>
 
   <style>
-    .voice-agent-area {
-      width: 100%;
-      height: 100px;
-      margin-bottom: clamp(5px, 4vw, 40px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
     @keyframes breathe {
       0% {
         transform: scale(1);
         box-shadow: 0 0 15px currentColor;
       }
-      /* Inhale - faster rise (0-35%) */
       35% {
         transform: scale(1.14);
         box-shadow: 0 0 30px currentColor;
       }
-      /* Hold at peak - subtle plateau (35-45%) */
       45% {
         transform: scale(1.12);
         box-shadow: 0 0 28px currentColor;
       }
-      /* Exhale - slower fall with ease-out feel (45-100%) */
       75% {
         transform: scale(1.04);
         box-shadow: 0 0 18px currentColor;
@@ -64,14 +52,14 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: currentColor;
+      background: white;
       transition: box-shadow 0.3s ease, opacity 0.3s ease;
-      box-shadow: 0 0 15px currentColor;
+      box-shadow: 0 0 15px white;
       opacity: 0.8;
       animation: breathe 4.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
     .start-circle-wrapper:hover .start-circle {
-      box-shadow: 0 0 35px currentColor;
+      box-shadow: 0 0 35px white;
       opacity: 1;
     }
     .start-circle.hidden {
@@ -81,23 +69,17 @@
       width: 5px;
       height: 5px;
       cursor: default;
-      box-shadow: 0 0 10px currentColor;
+      box-shadow: 0 0 10px white;
       animation: breathe 4.5s cubic-bezier(0.4, 0, 0.6, 1) infinite paused;
       transform: scale(1);
-    }
-    .start-circle.shrinking:hover {
-      transform: none;
     }
     .start-circle.stretching {
       width: 100%;
       height: 5px;
       border-radius: 2px;
       cursor: default;
-      box-shadow: 0 0 10px currentColor;
+      box-shadow: 0 0 10px white;
       animation: none;
-    }
-    .start-circle.stretching:hover {
-      transform: none;
     }
     .start-circle.fading {
       opacity: 0;
@@ -135,7 +117,7 @@
       opacity: 0;
       transition: opacity 0.5s ease;
       pointer-events: none;
-      color: currentColor;
+      color: white;
     }
     .waveform-stop-button svg {
       width: 100%;
@@ -157,104 +139,8 @@
       left: 10px;
       margin: 0;
       z-index: 100;
-      /* Scale from 18px at 639px viewport to 24px at 900px viewport */
       font-size: clamp(18px, calc(3.3px + 2.3vw), 24px);
       white-space: nowrap;
-    }
-    .getting-started-list {
-      padding-left: 0;
-      list-style: none;
-      counter-reset: steps;
-    }
-    .getting-started-list li {
-      counter-increment: steps;
-      padding-left: 1.4em;
-      position: relative;
-      max-height: 0;
-      margin-bottom: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.5s ease-out, margin-bottom 0.5s ease-out;
-    }
-    .getting-started-list li::before {
-      content: counter(steps) ".";
-      position: absolute;
-      left: 0;
-    }
-    .getting-started-list li.revealing {
-      max-height: 16em;
-      margin-bottom: 0.75em;
-      opacity: 1;
-      animation: swipeReveal 1s ease-out forwards;
-    }
-    @keyframes swipeReveal {
-      0% {
-        clip-path: inset(0 100% 0 0);
-      }
-      100% {
-        clip-path: inset(0 0 0 0);
-      }
-    }
-    .getting-started-list li.collapsing {
-      max-height: 0 !important;
-      margin-bottom: 0 !important;
-      opacity: 0;
-      transition: max-height 0.3s ease-out, margin-bottom 0.3s ease-out, opacity 0.2s ease-out;
-    }
-    .getting-started-list li.glowing {
-      animation: swipeReveal 1s ease-out forwards, textGlow 2s ease-in-out infinite;
-    }
-    @keyframes textGlow {
-      0%, 100% {
-        text-shadow: 0 0 4px currentColor;
-      }
-      50% {
-        text-shadow: 0 0 12px currentColor, 0 0 20px currentColor;
-      }
-    }
-    .tutorial-header {
-      visibility: hidden;
-    }
-    .tutorial-header.typing {
-      visibility: visible;
-    }
-    .tutorial-header .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 0.85em;
-      background: currentColor;
-      margin-left: 2px;
-      vertical-align: baseline;
-      animation: blink 0.7s step-end infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-    .column-right {
-      flex: 1;
-      min-width: 0;
-      opacity: 0;
-      pointer-events: none;
-      overflow: hidden;
-      height: 0;
-      transition: opacity 0.3s ease-out;
-    }
-    .fresh-user .column-right {
-      opacity: 1;
-      pointer-events: auto;
-      height: auto;
-    }
-    @media (max-width: 639px) {
-      .column-right {
-        display: none;
-      }
-      .fresh-user .column-right {
-        display: block;
-      }
-    }
-    .column-right.fading-out {
-      opacity: 0;
-      pointer-events: none;
     }
     .activate-link {
       cursor: pointer;
@@ -266,7 +152,7 @@
       display: none;
       width: 24px;
       height: 24px;
-      border: 2px solid currentColor;
+      border: 2px solid white;
       border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -316,68 +202,264 @@
     .start-circle.fade-in {
       transition: opacity 1.5s ease-out;
     }
-    .three-column-layout.pre-activation {
-      display: none;
-    }
   </style>
 
   <% if @list.pristine? %>
-  <h1 data-controller="fit-text" data-task-agent-target="heading">Task Master</h1>
+  <h1 data-controller="fit-text" data-task-agent-target="heading" style="display: none;">Hitchcock</h1>
   <% else %>
-  <h1 class="heading-shrunk" data-task-agent-target="heading">Task Master</h1>
+  <h1 class="heading-shrunk" data-task-agent-target="heading" style="display: none;">Hitchcock</h1>
   <% end %>
 
-  <div class="voice-agent-area">
-    <a class="activate-link" data-task-agent-target="activateLink" data-action="click->task-agent#activateMic click->sound#unlock">Activate Mic</a>
-    <div class="activate-status">
-      <div class="activate-spinner" data-task-agent-target="activateSpinner"></div>
-      <div class="activate-silence" data-task-agent-target="activateSilence">Silence. Mic Muted?</div>
-    </div>
-    <div class="activate-denied" data-task-agent-target="activateDenied">Mic Denied. Reset Permissions.</div>
-    <div class="start-circle-wrapper">
-      <div class="start-circle pre-activation" data-task-agent-target="startCircle" data-wakeword-target="trigger" data-action="click->task-agent#startAgent"></div>
-    </div>
-    <div class="waveform-container" data-task-agent-target="waveformContainer" data-action="click->task-agent#stopAgent">
-      <canvas class="waveform-canvas" data-task-agent-target="waveformCanvas"></canvas>
-      <div class="waveform-stop-button">
-        <%= lucide_icon('circle-pause', class: 'waveform-stop-icon') %>
+  <!-- Help Button, Layout Toggle, View Toggle - Top Left -->
+  <div class="top-left-controls" data-controller="layout-toggle">
+    <button class="help-btn" data-action="click->help-modal#open" title="Help (?)">
+      <%= lucide_icon('help-circle', class: 'help-icon') %>
+    </button>
+    <button class="layout-toggle-btn" data-action="click->layout-toggle#toggle" title="Toggle layout orientation">
+      <svg class="layout-icon layout-icon-left" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1" fill="currentColor" opacity="0.3"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
+      <svg class="layout-icon layout-icon-right" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1" fill="currentColor" opacity="0.3"/></svg>
+    </button>
+    <button class="view-toggle-btn" data-controller="view-toggle" data-action="click->view-toggle#toggle" title="Toggle list view (L)">
+      <svg class="view-icon view-icon-projects" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>
+      <svg class="view-icon view-icon-list" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+    </button>
+  </div>
+
+  <!-- Top Controls - Top Right -->
+  <div class="top-controls" data-controller="font project-add">
+    <button class="control-btn" data-action="click->project-add#show" title="New Project (P)">
+      <%= lucide_icon('folder') %>
+    </button>
+    <button class="control-btn" data-action="click->font#cycle" title="Change font">
+      <%= lucide_icon('type') %>
+    </button>
+    <button class="control-btn" data-controller="eye-toggle" data-action="click->eye-toggle#toggle" data-eye-toggle-target="button">
+      <%= lucide_icon('eye', class: 'eye-open', data: {eye_toggle_target: 'openIcon'}) %>
+      <%= lucide_icon('eye-off', class: 'eye-closed', style: 'display: none;', data: {eye_toggle_target: 'closedIcon'}) %>
+    </button>
+
+    <!-- Project Modal -->
+    <div class="project-modal" data-project-add-target="modal">
+      <div class="project-modal-backdrop" data-action="click->project-add#close"></div>
+      <div class="project-modal-content">
+        <div class="project-modal-header">
+          <h2 class="project-modal-title">New Project</h2>
+          <button type="button" class="project-modal-x" data-action="click->project-add#close">
+            <%= lucide_icon('x', class: 'project-modal-x-icon') %>
+          </button>
+        </div>
+
+        <form data-action="submit->project-add#create">
+          <div class="project-modal-field">
+            <label class="project-modal-label">Project Name</label>
+            <input type="text" class="project-modal-input" data-project-add-target="nameInput" placeholder="Enter project name" autofocus>
+          </div>
+
+          <div class="project-modal-field">
+            <label class="project-modal-label">Sticky Color</label>
+            <div class="project-modal-colors" data-project-add-target="colorPicker">
+              <button type="button" class="project-color-btn color-picker-btn" data-action="click->project-add#openColorPicker" title="Custom color"></button>
+              <input type="color" class="hidden-color-input" data-project-add-target="colorInput" data-action="input->project-add#customColorSelected">
+              <button type="button" class="project-color-btn selected" data-color="#FEF3C7" style="background-color: #FEF3C7;"></button>
+              <button type="button" class="project-color-btn" data-color="#DBEAFE" style="background-color: #DBEAFE;"></button>
+              <button type="button" class="project-color-btn" data-color="#FCE7F3" style="background-color: #FCE7F3;"></button>
+              <button type="button" class="project-color-btn" data-color="#D1FAE5" style="background-color: #D1FAE5;"></button>
+              <button type="button" class="project-color-btn" data-color="#E0E7FF" style="background-color: #E0E7FF;"></button>
+              <button type="button" class="project-color-btn" data-color="#FED7AA" style="background-color: #FED7AA;"></button>
+              <button type="button" class="project-color-btn" data-color="#E9D5FF" style="background-color: #E9D5FF;"></button>
+              <button type="button" class="project-color-btn" data-color="#FEE2E2" style="background-color: #FEE2E2;"></button>
+              <button type="button" class="project-color-btn" data-color="#D1D5DB" style="background-color: #D1D5DB;"></button>
+              <button type="button" class="project-color-btn" data-color="#BAE6FD" style="background-color: #BAE6FD;"></button>
+              <button type="button" class="project-color-btn" data-color="#FDE68A" style="background-color: #FDE68A;"></button>
+            </div>
+          </div>
+
+          <div class="project-modal-field">
+            <label class="project-modal-label">Font Color</label>
+            <div class="project-modal-font-colors" data-project-add-target="fontColorPicker">
+              <button type="button" class="font-color-btn selected" data-font-color="#1a1a1a" style="background-color: #1a1a1a;" title="Black"></button>
+              <button type="button" class="font-color-btn" data-font-color="#ffffff" style="background-color: #ffffff; border: 1px solid #d1d5db;" title="White"></button>
+              <button type="button" class="font-color-btn" data-font-color="#dc2626" style="background-color: #dc2626;" title="Red"></button>
+              <button type="button" class="font-color-btn" data-font-color="#2563eb" style="background-color: #2563eb;" title="Blue"></button>
+              <button type="button" class="font-color-btn" data-font-color="#16a34a" style="background-color: #16a34a;" title="Green"></button>
+              <button type="button" class="font-color-btn" data-font-color="#eab308" style="background-color: #eab308;" title="Yellow"></button>
+              <button type="button" class="font-color-btn" data-font-color="#ea580c" style="background-color: #ea580c;" title="Orange"></button>
+              <button type="button" class="font-color-btn" data-font-color="#9333ea" style="background-color: #9333ea;" title="Purple"></button>
+            </div>
+          </div>
+
+          <div class="project-modal-field">
+            <label class="project-modal-label">Preview</label>
+            <div class="project-modal-preview" data-project-add-target="preview">
+              <span class="project-modal-preview-text" data-project-add-target="previewText">Project Name</span>
+            </div>
+          </div>
+
+          <div class="project-modal-actions">
+            <button type="button" class="project-modal-cancel" data-action="click->project-add#close">Cancel</button>
+            <button type="submit" class="project-modal-submit">Create</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
-  <div class="three-column-layout <%= 'pre-activation' if @list.pristine? %>" data-task-agent-target="content">
-    <div class="column-spacer"></div>
-    <div class="column-middle" data-controller="copy-tasks">
-      <div class="task-list-outline">
-        <%= render "title", list: @list %>
+  <!-- Zoom Controls - Bottom Right -->
+  <div class="zoom-controls" data-controller="zoom">
+    <button class="zoom-btn" data-action="click->zoom#zoomOut">
+      <%= lucide_icon('zoom-out') %>
+    </button>
+    <button class="zoom-btn" data-action="click->zoom#zoomIn">
+      <%= lucide_icon('zoom-in') %>
+    </button>
+  </div>
 
-        <%= render "tasks/new_task_button", list: @list %>
+  <!-- Main Layout -->
+  <div class="sticky-board <%= 'pre-activation' if @list.pristine? %>" data-task-agent-target="content" data-keyboard-shortcuts-target="board">
+    <!-- Left Pane - Do Today (25%) -->
+    <%= render "tasks/today_pane", list: @list %>
 
-        <div id="tasks">
-          <%= turbo_frame_tag "task_list", src: tasks_path(list_id: @list.id), data: {controller: "sortable"} do %>
-            <%= render "tasks/list", list: @list %>
-          <% end %>
+    <!-- Right Pane - Projects (75%) -->
+    <div class="projects-pane">
+      <!-- Voice Agent Area at top of projects -->
+      <div class="voice-agent-area">
+        <a class="activate-link" data-task-agent-target="activateLink" data-action="click->task-agent#activateMic click->sound#unlock">
+          <div class="mic-icon-wrapper">
+            <%= lucide_icon('mic', class: 'mic-icon') %>
+          </div>
+        </a>
+        <div class="activate-status">
+          <div class="activate-spinner" data-task-agent-target="activateSpinner"></div>
+          <div class="activate-silence" data-task-agent-target="activateSilence">Silence. Mic Muted?</div>
+        </div>
+        <div class="activate-denied" data-task-agent-target="activateDenied">Mic Denied. Reset Permissions.</div>
+        <div class="start-circle-wrapper">
+          <div class="start-circle pre-activation" data-task-agent-target="startCircle" data-wakeword-target="trigger" data-action="click->task-agent#startAgent"></div>
+        </div>
+        <div class="waveform-container" data-task-agent-target="waveformContainer" data-action="click->task-agent#stopAgent">
+          <canvas class="waveform-canvas" data-task-agent-target="waveformCanvas"></canvas>
+          <div class="waveform-stop-button">
+            <%= lucide_icon('circle-pause', class: 'waveform-stop-icon') %>
+          </div>
         </div>
       </div>
 
-      <div class="copy-tasks-container">
-        <a class="copy-tasks-link" data-copy-tasks-target="link" data-action="click->copy-tasks#copy">Copy list</a>
-        <span class="copy-tasks-copied hidden" data-copy-tasks-target="copied">
-          <%= lucide_icon('check', class: 'copy-tasks-check-icon') %>
-          Copied
-        </span>
+      <!-- Projects Container -->
+      <div class="projects-container" data-eye-toggle-target="container">
+        <% @list.projects.order(:position).each do |project| %>
+          <%= render "projects/project_column", project: project, list: @list, show_completed: true %>
+        <% end %>
       </div>
-    </div>
 
-    <div class="column-right">
-      <h2 class="section-header tutorial-header" data-task-agent-target="tutorialHeader" data-text="READY?"></h2>
-      <ol class="getting-started-list" data-task-agent-target="tutorialList">
-        <li>Say <span style="display: inline-block; padding-right: 0.5em">"Task Master"</span>to begin</li>
-        <li>Now say:<br><span style="display: inline-block; padding-right: 0.5em">"Add to my list, Build lightsaber"</span></li>
-        <li>Now tell me to clear the list<p style="margin-top: 0.75em; margin-bottom: 0;">Try adding 3 real tasks to get done. Talk naturally, I can modify, reorder, and mark tasks complete. I can undo any mistakes.</p></li>
-        <li>You can also change tasks yourself by clicking.</li>
-      </ol>
+      <!-- List View Container (hidden by default, toggled via view-toggle) -->
+      <%= render "tasks/list_view", list: @list %>
     </div>
   </div>
 
+  <!-- Help Modal -->
+  <div class="help-modal" data-help-modal-target="modal">
+    <div class="help-modal-backdrop" data-action="click->help-modal#close"></div>
+    <div class="help-modal-content">
+      <h2 class="help-modal-title">Help</h2>
+
+      <div class="help-modal-grid">
+        <!-- Left Column - Keyboard Shortcuts -->
+        <div class="help-column">
+          <h3 class="help-section-title">Keyboard Shortcuts</h3>
+          <div class="help-shortcuts">
+            <div class="help-shortcut">
+              <span class="help-key">Arrow Keys</span>
+              <span class="help-desc">Navigate between stickies</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">Tab</span>
+              <span class="help-desc">Switch between Do Today and projects</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">T</span>
+              <span class="help-desc">Move selected sticky to Today</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">C</span>
+              <span class="help-desc">Check off selected sticky</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">Cmd+Enter</span>
+              <span class="help-desc">Finish editing sticky</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">1-9</span>
+              <span class="help-desc">Add new sticky for each project</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">P</span>
+              <span class="help-desc">Create new project</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">H</span>
+              <span class="help-desc">Hide/show checked off stickies</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">L</span>
+              <span class="help-desc">Toggle list view / project view</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">+/-</span>
+              <span class="help-desc">Zoom in/out</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">?</span>
+              <span class="help-desc">Toggle this help</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">M</span>
+              <span class="help-desc">Toggle microphone on/off</span>
+            </div>
+            <div class="help-shortcut">
+              <span class="help-key">Spacebar</span>
+              <span class="help-desc">Toggle microphone on/off</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Voice Commands -->
+        <div class="help-column">
+          <h3 class="help-section-title">Voice Commands</h3>
+          <div class="help-voice">
+            <div class="help-voice-activate">
+              <p class="help-voice-label">Activate with:</p>
+              <p class="help-voice-command">"Hitchcock"</p>
+            </div>
+
+            <div class="help-voice-item">
+              <p class="help-voice-label">Create new task:</p>
+              <p class="help-voice-example">"Create new task for [project name]... describe task"</p>
+            </div>
+
+            <div class="help-voice-item">
+              <p class="help-voice-label">Move task to Today:</p>
+              <p class="help-voice-example">"Move [task description] in [project name] to Today"</p>
+            </div>
+
+            <div class="help-voice-item">
+              <p class="help-voice-label">Complete a task:</p>
+              <p class="help-voice-example">"I completed [task description]"</p>
+            </div>
+
+            <div class="help-voice-item">
+              <p class="help-voice-label">Add new project:</p>
+              <p class="help-voice-example">"Add new project named [project name], the color is [color]"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="help-modal-close" data-action="click->help-modal#close">Close</button>
+    </div>
+  </div>
+
+  <!-- Footer Label -->
+  <p class="footer-label">
+    Made with <%= lucide_icon('heart', class: 'footer-heart') %> by Demystified.ai
+  </p>
 </div>

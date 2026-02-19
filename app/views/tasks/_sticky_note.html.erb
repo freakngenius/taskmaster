@@ -16,9 +16,19 @@
            data-controller="task-edit auto-resize"
            data-task-id="<%= task.id %>"
            data-action="blur->task-edit#blur keydown->task-edit#keydown"><%= task.title %></div>
-      <% if show_due_date %>
-        <div class="sticky-due-date <%= 'due-today' if is_due_today %>" style="color: <%= font_color %>;">
-          <%= is_due_today ? 'Today' : due_date.strftime('%b %d') %>
+      <% show_project = local_assigns[:show_project_label] && task.project.present? %>
+      <% if show_due_date || show_project %>
+        <div class="sticky-footer">
+          <% if show_due_date %>
+            <div class="sticky-due-date <%= 'due-today' if is_due_today %>" style="color: <%= font_color %>;">
+              <%= is_due_today ? 'Today' : due_date.strftime('%b %d') %>
+            </div>
+          <% else %>
+            <div></div>
+          <% end %>
+          <% if show_project %>
+            <div class="sticky-project-label" style="color: <%= font_color %>;"><%= task.project.name %></div>
+          <% end %>
         </div>
       <% end %>
     </div>

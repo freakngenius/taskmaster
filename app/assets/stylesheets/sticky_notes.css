@@ -1233,6 +1233,95 @@ body {
    RESPONSIVE
    ======================================== */
 
+/* ========================================
+   LIST VIEW
+   ======================================== */
+
+.list-view-container {
+  display: none;
+  grid-template-columns: repeat(auto-fill, 272px);
+  gap: 24px;
+  padding: 32px;
+  padding-bottom: 80px;
+  align-items: flex-start;
+  justify-content: start;
+}
+
+.list-view-container > turbo-frame {
+  display: block;
+}
+
+.list-view-container .sticky-note {
+  max-width: 100%;
+}
+
+.list-view-container .sticky-text {
+  font-size: 27px;
+}
+
+/* ========================================
+   STICKY FOOTER ROW (Due Date + Project Label)
+   ======================================== */
+
+.sticky-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 4px;
+  gap: 8px;
+}
+
+.sticky-footer .sticky-due-date {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.sticky-project-label {
+  font-family: 'Noto Sans Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.55;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
+}
+
+/* ========================================
+   VIEW TOGGLE BUTTON
+   ======================================== */
+
+.view-toggle-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.view-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.view-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
 @media (max-width: 768px) {
   .sticky-board {
     flex-direction: column;
@@ -1268,5 +1357,10 @@ body {
   .top-controls {
     top: 16px;
     right: 16px;
+  }
+
+  .list-view-container {
+    grid-template-columns: repeat(auto-fill, 200px);
+    padding: 16px !important;
   }
 }
