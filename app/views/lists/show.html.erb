@@ -211,7 +211,7 @@
   <% end %>
 
   <!-- Help Button, Layout Toggle, View Toggle - Top Left -->
-  <div class="top-left-controls" data-controller="layout-toggle">
+  <div class="top-left-controls" data-controller="layout-toggle view-toggle">
     <button class="help-btn" data-action="click->help-modal#open" title="Help (?)">
       <%= lucide_icon('help-circle', class: 'help-icon') %>
     </button>
@@ -219,7 +219,7 @@
       <svg class="layout-icon layout-icon-left" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1" fill="currentColor" opacity="0.3"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
       <svg class="layout-icon layout-icon-right" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1" fill="currentColor" opacity="0.3"/></svg>
     </button>
-    <button class="view-toggle-btn" data-controller="view-toggle" data-action="click->view-toggle#toggle" title="Toggle list view (L)">
+    <button class="view-toggle-btn" data-action="click->view-toggle#toggle" title="Toggle list view (L)">
       <svg class="view-icon view-icon-projects" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>
       <svg class="view-icon view-icon-list" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
     </button>

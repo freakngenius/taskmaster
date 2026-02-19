@@ -49,9 +49,11 @@ export default class extends Controller {
     if (projectsContainer) projectsContainer.style.display = 'none'
     if (listContainer) listContainer.style.display = 'grid'
 
-    // Toggle icon visibility
-    const projectIcon = this.element.querySelector('.view-icon-projects')
-    const listIcon = this.element.querySelector('.view-icon-list')
+    // Toggle icon visibility - find button first
+    const toggleBtn = this.element.querySelector('.view-toggle-btn') || this.element
+    const projectIcon = toggleBtn.querySelector('.view-icon-projects')
+    const listIcon = toggleBtn.querySelector('.view-icon-list')
+    console.log('[ViewToggle] Icons found:', { projectIcon: !!projectIcon, listIcon: !!listIcon })
     if (projectIcon) projectIcon.style.display = 'none'
     if (listIcon) listIcon.style.display = 'block'
   }
@@ -72,9 +74,11 @@ export default class extends Controller {
     if (projectsContainer) projectsContainer.style.display = 'flex'
     if (listContainer) listContainer.style.display = 'none'
 
-    // Toggle icon visibility
-    const projectIcon = this.element.querySelector('.view-icon-projects')
-    const listIcon = this.element.querySelector('.view-icon-list')
+    // Toggle icon visibility - find button first
+    const toggleBtn = this.element.querySelector('.view-toggle-btn') || this.element
+    const projectIcon = toggleBtn.querySelector('.view-icon-projects')
+    const listIcon = toggleBtn.querySelector('.view-icon-list')
+    console.log('[ViewToggle] Icons found:', { projectIcon: !!projectIcon, listIcon: !!listIcon })
     if (projectIcon) projectIcon.style.display = 'block'
     if (listIcon) listIcon.style.display = 'none'
   }
