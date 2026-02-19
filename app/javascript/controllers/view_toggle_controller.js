@@ -42,12 +42,21 @@ export default class extends Controller {
     console.log('[ViewToggle] Elements found:', {
       board: !!board,
       projectsContainer: !!projectsContainer,
-      listContainer: !!listContainer
+      listContainer: !!listContainer,
+      listChildren: listContainer?.children.length
     })
 
     if (board) board.classList.add('view-list')
-    if (projectsContainer) projectsContainer.style.display = 'none'
-    if (listContainer) listContainer.style.display = 'grid'
+    if (projectsContainer) {
+      projectsContainer.style.display = 'none'
+      console.log('[ViewToggle] Hid projects container')
+    }
+    if (listContainer) {
+      listContainer.style.display = 'grid'
+      console.log('[ViewToggle] Showing list container as grid')
+    } else {
+      console.error('[ViewToggle] List container NOT FOUND!')
+    }
 
     // Toggle icon visibility - find button first
     const toggleBtn = this.element.querySelector('.view-toggle-btn') || this.element
