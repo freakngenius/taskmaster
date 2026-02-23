@@ -2,8 +2,7 @@
   <% note_color = task.color.presence || task.project&.color.presence || '#FEF3C7' %>
   <% font_color = (task.project&.respond_to?(:font_color) && task.project&.font_color.present?) ? task.project.font_color : '#1a1a1a' %>
   <% due_date = task.due_at&.to_date %>
-  <% is_due_today = due_date == Date.current %>
-  <% show_due_date = due_date.present? && due_date >= Date.current %>
+  <% show_due_date = due_date.present? %>
   <div class="sticky-note <%= 'completed' if task.completed %> <%= 'starred' if task.starred %>"
        style="background-color: <%= note_color %>;"
        data-task-id="<%= task.id %>"
@@ -20,8 +19,8 @@
       <% if show_due_date || show_project %>
         <div class="sticky-footer">
           <% if show_due_date %>
-            <div class="sticky-due-date <%= 'due-today' if is_due_today %>" style="color: <%= font_color %>;">
-              <%= is_due_today ? 'Today' : due_date.strftime('%b %d') %>
+            <div class="sticky-due-date" data-task-action-target="dueDate" style="color: <%= font_color %>;">
+              <%= due_date.strftime('%b %-d') %>
             </div>
           <% else %>
             <div></div>

@@ -5,6 +5,32 @@ export default class extends Controller {
     dueDate: String
   }
 
+  static targets = ['dueDate']
+
+  connect() {
+    this.updateDueDateLabel()
+  }
+
+  updateDueDateLabel() {
+    if (!this.hasDueDateTarget || !this.dueDateValue) return
+
+    const dueDate = new Date(this.dueDateValue + 'T00:00:00')
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const isToday = dueDate.getTime() === today.getTime()
+    const isPast = dueDate.getTime() < today.getTime()
+
+    if (isPast) {
+      this.dueDateTarget.remove()
+      return
+    }
+
+    this.dueDateTarget.textContent = isToday
+      ? 'Today'
+      : dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    this.dueDateTarget.classList.toggle('due-today', isToday)
+  }
+
   complete(event) {
     event.preventDefault()
     event.stopPropagation()
@@ -176,28 +202,8 @@ export default class extends Controller {
       console.log('[dateChanged] Response data:', data)
       if (data.task || data.id) {
         const task = data.task || data
-        // Update the due date display
-        let dueDateEl = this.element.querySelector('.sticky-due-date')
-        const dueDate = task.due_at ? new Date(task.due_at + 'T00:00:00') : null
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-
-        if (dueDate) {
-          const isToday = dueDate.getTime() === today.getTime()
-          const dateText = isToday ? 'Today' : dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-
-          if (!dueDateEl) {
-            // Create the date element if it doesn't exist
-            const stickyContent = this.element.querySelector('.sticky-content')
-            dueDateEl = document.createElement('div')
-            dueDateEl.className = 'sticky-due-date'
-            stickyContent.appendChild(dueDateEl)
-          }
-          dueDateEl.textContent = dateText
-          dueDateEl.classList.toggle('due-today', isToday)
-        } else if (dueDateEl) {
-          dueDateEl.remove()
-        }
+        this.dueDateValue = task.due_at || ''
+        this.updateDueDateLabel()
       }
     })
     .catch(error => {
